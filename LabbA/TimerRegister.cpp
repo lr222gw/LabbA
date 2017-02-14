@@ -145,7 +145,7 @@ TimberRegister::TimberRegister()
 	this->timberArr = new Timber*[capacity];
 }
 
-TimberRegister::TimberRegister(int capacity)
+TimberRegister::TimberRegister(int capacity)	
 {
 	this->capacity = capacity;
 	this->timberArr = new Timber*[capacity];
@@ -154,7 +154,7 @@ TimberRegister::TimberRegister(int capacity)
 
 TimberRegister::~TimberRegister()
 {
-	//TODO HJÄLP: Detta orsakar problem med kopieringskonstruktorn...
+	
 
 	for (int i = 0; i < this->TimbersInArr; i++) {
 
@@ -168,6 +168,8 @@ TimberRegister::~TimberRegister()
 //string * TimberRegister::getTimberStringArr(float min, string *arr)const
 void TimberRegister::getTimberStringArr(string *arr, float min)const
 {
+	
+
 	//string *arr;
 	/*if (this->TimbersInArr == 0) {
 		arr = new string[1];
@@ -190,9 +192,9 @@ void TimberRegister::getTimberStringArr(string *arr, float min)const
 		
 	}
 
-	if (this->TimbersInArr == 0) {
+	/*if (this->TimbersInArr == 0) {
 		arr[0] = "TimberRegister är helt tom...\n";
-	}
+	}*/
 
 	//return arr;
 }
@@ -230,18 +232,38 @@ int TimberRegister::getTimbersAmount()const
 
 
 //TimberRegister & TimberRegister::operator=(const TimberRegister &other)
-void  TimberRegister::operator=(const TimberRegister &other)
+TimberRegister& TimberRegister::operator=(const TimberRegister &other) 
 {
 
-	//TODO Fråga om: Ingen "Självtilldeningskoll" görs, vad är det?
-	// Gör vi inte djuphetskopierng ?
+				
+
+	if (this != &other) { //Ingen "Självtilldeningskoll" görs, vad är det?
+
+		
+		// Gör vi inte djuphetskopierng ? Nu gör vi..
+		for (int i = 0; i < this->TimbersInArr; i++) {
+			delete this->timberArr[i];
+		}
+		delete[] this->timberArr;
+
+		this->capacity = other.capacity;		
+		
+
+		this->timberArr = new Timber*[this->capacity];
+
+		for (int i = 0; i < other.TimbersInArr; i++) {
+					
+
+			this->timberArr[i] = new Timber();
+			*this->timberArr[i] = *other.timberArr[i];
+			//this->TimbersInArr = other.TimbersInArr;
+		}
 
 
-	this->capacity = other.capacity;
-	*this->timberArr = *other.timberArr;
-	this->TimbersInArr = other.TimbersInArr;
-	
-	//return *this; //? 
+		//return *this; //? 
+	}
+
+	return *this;
 
 }
 
@@ -249,7 +271,7 @@ void  TimberRegister::operator=(const TimberRegister &other)
 
 string TimberRegister::TimberToString()const
 {
-	//TODO:  loopa timberArr, använd "toString", spara ner alla resultat, returnera stringArr
+	
 	string myLongString;
 	string myTemp;
 	for (int i = 0; i < this->TimbersInArr; i++) {
@@ -266,18 +288,20 @@ TimberRegister::TimberRegister(const TimberRegister& copy)
 	this->capacity = copy.capacity;
 	this->TimbersInArr = copy.TimbersInArr;
 
-	//Timber **tempArr = new Timber*[this->capacity];
-	//Timber *tempArr = new Timber[this->capacity];
-	//this->timberArr = new Timber[this->capacity];
-	Timber *tempArr = new Timber[this->capacity];
+
+	this->timberArr = new Timber*[this->capacity];
 
 	for (int i = 0; i < this->TimbersInArr; i++) {
 
-		tempArr[i] = *copy.timberArr[i];   //Är detta inte rätt? Är det inte deepcopy?
+		 //Är detta inte rätt? Är det inte deepcopy?
 											//Nu måste det vara rätt(?)
+		this->timberArr[i] = new Timber();
+							//^Detta löste mitt tidigare problem... Det var visserligen en array av Timbers
+							// men inga objekt i den Arrayen var initierade (?), så genom att initiera dem före vi anger ett värde
+		*this->timberArr[i] = *copy.timberArr[i];
 	}
 
-	this->timberArr = &tempArr;
+	//this->timberArr = &tempArr;
 
 	//**this->timberArr = *tempArr;
 

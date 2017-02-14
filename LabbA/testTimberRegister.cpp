@@ -136,6 +136,9 @@ void testFunction() {
 	//to_string(myRegister2.amountOfCash)
 	//to_string(myRegister.amountOfCash) 
 
+	myRegister = myRegister2; //testa tilldelnings operatorn
+
+
 	myRegister.add(timb6);
 	myRegister.add(timb7);
 	myRegister.add(timb8);
@@ -143,9 +146,8 @@ void testFunction() {
 
 	//stringArr = myRegister.getTimberStringArr();
 	myRegister.getTimberStringArr(stringArr);
-
 	for (int i = 0; i < myRegister.getTimbersAmount(); i++) {
 		cout << stringArr[i] << endl;
 	}
-	//delete stringArr;	
+	delete[] stringArr;		
 }

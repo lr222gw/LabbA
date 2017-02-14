@@ -39,7 +39,9 @@ public:
 	void toString(string &myString);
 
 	string getDimension()const;
-	
+
+	void Timber::operator=(const Timber& copy);
+
 	bool operator==(const Timber& other)const;
 
 	Timber::Timber(const Timber& copy);

@@ -75,6 +75,18 @@ float Timber::getHeight()const
 
 
 
+void Timber::operator=(const Timber& other)
+{
+
+	this->antalMeter = other.antalMeter;
+	this->dimension = other.dimension;
+
+	this->prisPerMeter = other.prisPerMeter;
+
+	this->height = other.height;
+	this->width = other.width;
+	
+}
 
 Timber::Timber(const Timber& copy)
 {
