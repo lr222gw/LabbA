@@ -66,8 +66,10 @@ void getInput(char & status) {
 }
 
 void doChoice(char status, TimberRegister * myRegister) {
-	string stringArr[500];
-	myRegister->getTimberStringArr(stringArr);
+	//TODO  "Ej korrekt, du har allokerat plats för 500 strängar, det ska gå att få en godtycklig mängd, inte max 500"
+	//string stringArr[500];
+	//string *stringArr = new string[];
+	//myRegister->getTimberStringArr(stringArr);
 	//char choice = status;
 	switch (status) {
 	case '1':{
@@ -166,14 +168,14 @@ void presentTimberIfLessThan(TimberRegister * myRegister)
 	cout << "Ange ett maxvärde (listan visar alla virken som understiger maxvärdet..) \n";
 	cin >> minMeter;
 	cin.ignore();
-	string stringArr[500];
+	string *stringArr = new string[myRegister->getTimbersAmount()];
 	myRegister->getTimberStringArr(stringArr,minMeter);
 
 	for (int i = 0; i < myRegister->getTimbersAmount(); i++) {
 
 		cout << stringArr[i] << endl;
 	}
-	//delete[] stringArr;
+	delete[] stringArr;
 
 	getchar();
 }

@@ -36,13 +36,14 @@ public:
 
 	Timber();
 
-	void toString(string &myString);
+	void toString(string &myString)const;
 
 	string getDimension()const;
 
 	void Timber::operator=(const Timber& copy);
 
 	bool operator==(const Timber& other)const;
+	
 
 	Timber::Timber(const Timber& copy);
 

@@ -38,7 +38,7 @@ Timber::Timber()
 
 }
 
-void Timber::toString(string &myString)
+void Timber::toString(string &myString) const
 {
 	myString =	this->dimension + "| " +
 						to_string(this->antalMeter) + "m | "	+

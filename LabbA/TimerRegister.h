@@ -43,7 +43,7 @@ public:
 	
 	//TimberRegister &operator=(const TimberRegister & other); //Tilldelnignskonstruktor
 	TimberRegister & operator=(const TimberRegister & other); //Tilldelnignskonstruktor	
-		//TODO googla Referenser i c++
+		//ODO googla Referenser i c++
 
 
 	string TimberToString()const;//Ska gå igenom alla i TimbersArr och sedan lägga dem i en StringArray som ska returneras?

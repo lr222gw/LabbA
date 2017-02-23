@@ -113,7 +113,7 @@ bool TimberRegister::exists(Timber toCheck)const
 {
 	bool status = false;
 	for (int i = 0; i < this->TimbersInArr; i++) {
-		if (this->timberArr[i]->getDimension() == toCheck.getDimension()) {
+		if (*this->timberArr[i] == toCheck) {
 			status = true;
 		}
 	}
@@ -178,14 +178,16 @@ void TimberRegister::getTimberStringArr(string *arr, float min)const
 		arr = new string[this->TimbersInArr];
 	}
 	*/
-
+	int counter = 0;
 	for (int i = 0; i < this->TimbersInArr; i++) {
 		if (min == -1) {
 			 this->timberArr[i]->toString(arr[i]);
 		}
 		else {
 			if (min >= this->timberArr[i]->getMeter()) {
-				this->timberArr[i]->toString(arr[i]);
+
+				this->timberArr[i]->toString(arr[counter]);
+				counter++;
 				//arr[i] = this->timberArr[i]->toString();
 			}
 		}
@@ -204,6 +206,9 @@ void TimberRegister::removeTimber(string dimension)
 	
 	for (int i = 0; i < this->TimbersInArr; i++) {
 		
+		//Om jag ska använda "==" så måste jag ju jämföra 2 Timber objekt...
+		//Då måste jag ju skapa ett nytt... Onödigt?
+		//OBS, att jag fixade Exist funktionen som används av add()... (den använder == operatorn för timber)
 		if (this->timberArr[i]->getDimension() == dimension ) {
 
 			delete this->timberArr[i];
@@ -238,7 +243,7 @@ TimberRegister& TimberRegister::operator=(const TimberRegister &other)
 				
 
 	if (this != &other) { //Ingen "Självtilldeningskoll" görs, vad är det?
-
+		
 		
 		// Gör vi inte djuphetskopierng ? Nu gör vi..
 		for (int i = 0; i < this->TimbersInArr; i++) {
@@ -247,7 +252,7 @@ TimberRegister& TimberRegister::operator=(const TimberRegister &other)
 		delete[] this->timberArr;
 
 		this->capacity = other.capacity;		
-		
+		this->TimbersInArr = other.TimbersInArr;
 
 		this->timberArr = new Timber*[this->capacity];
 
@@ -255,7 +260,11 @@ TimberRegister& TimberRegister::operator=(const TimberRegister &other)
 					
 
 			this->timberArr[i] = new Timber();
-			*this->timberArr[i] = *other.timberArr[i];
+			*this->timberArr[i] = *other.timberArr[i]; 
+			// TODO: "Ej korrekt, du har glömt kopiera över TimbersInArr"
+
+			//^är inte detta rätt! 
+
 			//this->TimbersInArr = other.TimbersInArr;
 		}
 
@@ -284,7 +293,7 @@ string TimberRegister::TimberToString()const
 
 TimberRegister::TimberRegister(const TimberRegister& copy)
 {
-	//TODO Fråga om: Är detta ingen deepcopy?
+	
 	this->capacity = copy.capacity;
 	this->TimbersInArr = copy.TimbersInArr;
 

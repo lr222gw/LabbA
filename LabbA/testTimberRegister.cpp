@@ -136,6 +136,15 @@ void testFunction() {
 	//to_string(myRegister2.amountOfCash)
 	//to_string(myRegister.amountOfCash) 
 
+	cout << "copyContruktorn, skriver ut innehållet" << endl;
+
+	string *strPtr = new string[myRegister2.getTimbersAmount()]; 
+	myRegister2.getTimberStringArr(strPtr);
+
+	for (int i = 0; i < myRegister2.getTimbersAmount(); i++) {
+		cout << strPtr[i]<< endl;
+	}
+
 	myRegister = myRegister2; //testa tilldelnings operatorn
 
 
@@ -143,11 +152,11 @@ void testFunction() {
 	myRegister.add(timb7);
 	myRegister.add(timb8);
 
-
+	cout << "tilldelningsoperatorn, skriver ut innehållet" << endl;
 	//stringArr = myRegister.getTimberStringArr();
 	myRegister.getTimberStringArr(stringArr);
 	for (int i = 0; i < myRegister.getTimbersAmount(); i++) {
 		cout << stringArr[i] << endl;
 	}
-	delete[] stringArr;		
+	delete[] stringArr;	delete[] strPtr;		
 }
